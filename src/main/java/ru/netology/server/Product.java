@@ -1,4 +1,4 @@
-package ru.netology;
+package ru.netology.server;
 
 public class Product {
     private String name;

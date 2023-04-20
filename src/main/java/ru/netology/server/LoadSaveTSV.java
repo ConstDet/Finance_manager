@@ -1,21 +1,16 @@
-package ru.netology;
+package ru.netology.server;
 
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
-import com.opencsv.bean.ColumnPositionMappingStrategy;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.exceptions.CsvException;
+import ru.netology.server.Product;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class LoadSaveTSV {
     private ArrayList<Product> listProduct = new ArrayList<>();
@@ -29,6 +24,7 @@ public class LoadSaveTSV {
                 .build()) {
             List<String[]> allRow = reader.readAll();
             for (String[] s : allRow) {
+                //нужна проверка на пустую категорию
                 listProduct.add(new Product(s[0], s[1]));
             }
             return listProduct;
