@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class RecordInServer {
@@ -40,7 +41,9 @@ public class RecordInServer {
         String line = in.readLine();
         JSONParser jsonParser = new JSONParser();
         try {
-            Object obj = jsonParser.parse(line);
+            //Object obj = jsonParser.parse(line);
+            List<Object> = jsonParser.parse(line);
+            надо как-то распарсить JSON объект
             JSONObject jsonObject = (JSONObject) obj;
             JSONObject maxCategory = (JSONObject) jsonObject.get("maxCategory");
             System.out.println((String) maxCategory.get("category"));
