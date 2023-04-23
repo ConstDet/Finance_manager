@@ -16,7 +16,7 @@ public class Main {
                 try (Socket clientSocket = serverSocket.accept(); // ждем подключения
                      PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                      BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
-                    out.println("Создано подключение на сервере через порт " + clientSocket.getLocalPort());
+                    out.println("Подключились на сервере через порт " + clientSocket.getLocalPort());
                     log.addLog(in.readLine());//получили сообщение и записали его в лог
                     log.saveLog();//и сохраним его в файле data.bin
                     CalculateMax calculateMax = new CalculateMax(log);//считаем макс сумму по категориям
