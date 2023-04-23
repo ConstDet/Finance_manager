@@ -1,9 +1,9 @@
 package ru.netology.server;
 
 import junit.framework.TestCase;
-import org.junit.Test;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -32,6 +32,7 @@ public class CalculateMaxTest extends TestCase {
             super.loadLog();
         }
     }
+
     @Test
     public void testCalcMax() throws FileNotFoundException {
         LogMock logMock = new LogMock();
