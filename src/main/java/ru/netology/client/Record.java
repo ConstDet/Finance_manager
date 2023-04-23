@@ -1,14 +1,12 @@
-package ru.netology.server;
+package ru.netology.client;
 
-import java.util.Date;
-
-public class Request {
+public class Record {
     private String title;
     private String date;
     private double sum;
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String name) {
+        this.title = name;
     }
 
     public String getTitle() {

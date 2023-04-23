@@ -1,5 +1,6 @@
 package ru.netology;
 
+import ru.netology.server.CalculateMax;
 import ru.netology.server.LoadSaveTSV;
 import ru.netology.server.Log;
 import ru.netology.server.Product;
@@ -12,20 +13,16 @@ import java.util.List;
 public class Main {
     static final int PORT = 8989;
     public static void main(String[] args) throws FileNotFoundException {
-        LoadSaveTSV loadSaveTSV = new LoadSaveTSV();
-        List<Product> productList = loadSaveTSV.loadTSV("categories.tsv");
-        productList.forEach(System.out::println);
-        /*Log log = new Log();
-        for (int i = 0; i < 10; i++) {
-            log.addLog("{\"title\":\"булка\",\"date\":\"2023.04.20\",\"sum\":" + (double) i + "}");
-        }
-        log.saveLog();*/
+        Log log = new Log();
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
                 try (Socket clientSocket = serverSocket.accept(); // ждем подключения
                      PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                      BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
-                    
+                    out.println("Создано подключение на сервере через порт " + clientSocket.getLocalPort());
+                    log.addLog(in.readLine());//получили сообщение и записали его в лог
+                    CalculateMax calculateMax = new CalculateMax(log);//считаем макс сумму по категориям
+                    out.println(calculateMax.calcMax());//ответ
                 }
             }
         } catch (IOException e) {

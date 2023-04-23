@@ -41,16 +41,6 @@ public class Log {
         }
     }
 
-    public void saveLog() throws FileNotFoundException {
-        if (listRequestLog == null) return;
-        Gson gson = new GsonBuilder().create();
-        String str = gson.toJson(listRequestLog);
-        try (PrintWriter pW = new PrintWriter(fileJson)) {
-            pW.print(gson.toJson(listRequestLog));
-            pW.flush();
-        }
-    }
-
     public void addLog(String strLog) {
         Gson gson = new GsonBuilder().create();
         Request req = gson.fromJson(strLog, Request.class);
