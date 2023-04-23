@@ -32,7 +32,7 @@ public class Client {
                         System.out.println("Всего хорошего!");
                         return;
                     default:
-                        System.out.println("Требуется указать цифру от 1 до 2!");
+                        System.out.println("Требуется указать цифру 1 или 2!");
                         break;
                 }
             } catch (IOException e) {
