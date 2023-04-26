@@ -1,6 +1,5 @@
 package ru.netology.server;
-
-import java.util.Date;
+//класс строки, получаемой сервером от клиента
 
 public class Request {
     private String title;

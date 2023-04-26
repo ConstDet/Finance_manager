@@ -1,4 +1,5 @@
 package ru.netology.client;
+//класс формирования строки запроса от клиента серверу
 
 public class Record {
     private String title;

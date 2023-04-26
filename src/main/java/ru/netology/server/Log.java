@@ -1,4 +1,5 @@
 package ru.netology.server;
+//класс загрузки, записи в файл data.bin строки клиента
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,7 +18,7 @@ public class Log {
         loadLog();
     }
 
-    public List<Request> getLog() {
+    public List<Request> getLog() throws ParseException {
         return listRequestLog;
     }
 

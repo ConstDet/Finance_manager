@@ -1,4 +1,5 @@
 package ru.netology.server;
+//класс загрузки, записи в файл categories.tsv пары продукт-категория
 
 import com.opencsv.*;
 import com.opencsv.exceptions.CsvException;
@@ -7,7 +8,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class LoadSaveTSV {

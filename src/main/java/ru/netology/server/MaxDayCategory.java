@@ -1,6 +1,7 @@
-package ru.netology.client;
+package ru.netology.server;
+//класс объекта JSON, содержащий пары ключ-значение максимальной категории и значения за период
 
-public class ResponseRecord {
+public class MaxDayCategory {
     private String category;
     private double sum;
 
@@ -17,6 +18,7 @@ public class ResponseRecord {
     }
 
     public double getSum() {
-        return sum;
+        return getSum();
     }
+
 }
