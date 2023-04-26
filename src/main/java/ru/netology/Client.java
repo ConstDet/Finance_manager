@@ -1,11 +1,15 @@
 package ru.netology;
 
 import ru.netology.client.RecordInServer;
+import ru.netology.server.LoadSaveTSV;
+import ru.netology.server.Product;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
@@ -21,7 +25,8 @@ public class Client {
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("Что вы хотите сделать?");
                 System.out.println("1. Отправить запись о покупке на сервер");
-                System.out.println("2. Завершить работу клиента");
+                System.out.println("2. Показать список \"Продукт-Категория\" и завершить работу клиента");
+                System.out.println("3. Завершить работу клиента");
                 String choice = scanner.nextLine();
                 switch (choice) {
                     case "1":
@@ -29,11 +34,17 @@ public class Client {
                         record.inServer();
                         break;
                     case "2":
+                        LoadSaveTSV loadSaveTSV = new LoadSaveTSV();
+                        ArrayList<Product> arrayListP = loadSaveTSV.loadTSV("categories.tsv");
+                        arrayListP.forEach(System.out::println);
+                        System.out.println("Требуется новое подключение клиента и сервера!");
+                        return;
+                    case "3":
                         System.out.println("Всего хорошего!");
                         return;
                     default:
-                        System.out.println("Требуется указать цифру 1 или 2!");
-                        break;
+                        System.out.println("Требуется указать цифру от 1 до 3!");
+                        return;
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);

@@ -1,4 +1,5 @@
 package ru.netology.client;
+//класс формирования строки JSON и отправки запроса на сервер
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,27 +27,44 @@ public class RecordInServer {
     }
 
     public void inServer() throws IOException {
-        Record record = new Record();
-        System.out.println("Укажите наменование продукта:");
-        record.setTitle(scanner.nextLine());
-        System.out.println("Укажите стоимость продукта:");
-        record.setSum(scanner.nextDouble());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-        Date date = new Date(System.currentTimeMillis());
-        record.setDate(format.format(date));
-        Gson gson = new GsonBuilder().create();
-        String str = gson.toJson(record);
-        out.println(str);//отправили сообщение
-        String line = in.readLine();
-        JSONParser jsonParser = new JSONParser();
         try {
-            Object obj = jsonParser.parse(line);
-            JSONObject jsonObject = (JSONObject) obj;
-            JSONObject maxCategory = (JSONObject) jsonObject.get("maxCategory");
-            System.out.println((String) maxCategory.get("category"));
-            System.out.println((Double) maxCategory.get("sum"));
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+            Record record = new Record();
+            System.out.println("Укажите наменование продукта:");
+            record.setTitle(scanner.nextLine());
+            System.out.println("Укажите стоимость продукта:");
+            String d = scanner.nextLine();
+            record.setSum(Double.parseDouble(d));
+            SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+            Date date = new Date(System.currentTimeMillis());
+            record.setDate(format.format(date));
+            Gson gson = new GsonBuilder().create();
+            String str = gson.toJson(record);
+            out.println(str);//отправили сообщение
+            String line = in.readLine();//приняли ответ
+            JSONParser jsonParser = new JSONParser();
+            try {
+                Object obj = jsonParser.parse(line);
+                JSONObject jsonObject = (JSONObject) obj;
+                JSONObject maxCategory = (JSONObject) jsonObject.get("maxCategory");
+                System.out.println("За весь период: " + maxCategory.get("category"));
+                System.out.println("Сумма: " + maxCategory.get("sum"));
+
+                JSONObject maxYearCategory = (JSONObject) jsonObject.get("maxYearCategory");
+                System.out.println("За год: " + maxYearCategory.get("category"));
+                System.out.println("Сумма: " + maxYearCategory.get("sum"));
+
+                JSONObject maxMonthCategory = (JSONObject) jsonObject.get("maxMonthCategory");
+                System.out.println("За месяц: " + maxMonthCategory.get("category"));
+                System.out.println("Сумма: " + maxMonthCategory.get("sum"));
+
+                JSONObject maxDayCategory = (JSONObject) jsonObject.get("maxDayCategory");
+                System.out.println("За день: " + maxDayCategory.get("category"));
+                System.out.println("Сумма: " + maxDayCategory.get("sum"));
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("При вводе вещественного числа используйте точку \".\" " + e);
         }
     }
 }

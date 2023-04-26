@@ -1,4 +1,5 @@
 package ru.netology.server;
+//класс хранения пары продукт-категория
 
 public class Product {
     private String name;
@@ -20,7 +21,7 @@ public class Product {
     @Override
     public String toString() {
         return "{ Name: " + name +
-                "\nCategory: " + category +
-                "\n}";
+                " Category: " + category +
+                " }";
     }
 }

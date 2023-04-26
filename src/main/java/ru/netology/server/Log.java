@@ -1,25 +1,24 @@
 package ru.netology.server;
+//класс загрузки, записи в файл data.bin строки клиента
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-//org.fife.io.UnicodeReader
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Log {
     private List<Request> listRequestLog = new ArrayList<>();
-    private final File fileJson = new File("jsonLog.json");
     private final File fileBin = new File("data.bin");
 
     public Log() throws FileNotFoundException {
         loadLog();
     }
 
-    public List<Request> getLog() {
+    public List<Request> getLog() throws ParseException {
         return listRequestLog;
     }
 
@@ -39,9 +38,7 @@ public class Log {
             Gson gson = new GsonBuilder().create();
             Request[] req = gson.fromJson(strBis, Request[].class);
             listRequestLog.clear();
-            for (Request r : req) {
-                listRequestLog.add(r);
-            }
+            Collections.addAll(listRequestLog, req);
         }
     }
 

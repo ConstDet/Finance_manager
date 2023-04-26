@@ -6,7 +6,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CalculateMaxTest extends TestCase {
@@ -18,7 +21,7 @@ public class CalculateMaxTest extends TestCase {
         }
 
         @Override
-        public List<Request> getLog() {
+        public List<Request> getLog() throws ParseException {
             requestMock.setTitle("булка");
             requestMock.setDate("2023.04.23");
             requestMock.setSum(300.0);
@@ -34,12 +37,12 @@ public class CalculateMaxTest extends TestCase {
     }
 
     @Test
-    public void testCalcMax() throws FileNotFoundException {
+    public void testCalcMax() throws FileNotFoundException, ParseException {
         LogMock logMock = new LogMock();
         logMock.getLog();
 
         CalculateMax calculateMax = new CalculateMax(logMock);
-        String preferences = calculateMax.calcMax();
+        String preferences = calculateMax.calcMax("", "", 0);
 
         String expect = "{\"maxCategory\":{\"category\":\"еда\",\"sum\":300.0}}";
 

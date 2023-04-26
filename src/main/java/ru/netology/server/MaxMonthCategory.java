@@ -1,7 +1,7 @@
 package ru.netology.server;
 //класс объекта JSON, содержащий пары ключ-значение максимальной категории и значения за период
 
-public class MaxCategory {
+public class MaxMonthCategory {
     private String category;
     private double sum;
 
