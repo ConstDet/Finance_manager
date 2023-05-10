@@ -30,7 +30,7 @@ public class RecordInServer {
         try {
             Record record = new Record();
             System.out.println("Укажите наменование продукта:");
-            record.setTitle(scanner.nextLine());
+            record.setTitle(scanner.nextLine().toLowerCase());
             System.out.println("Укажите стоимость продукта:");
             String d = scanner.nextLine();
             record.setSum(Double.parseDouble(d));
