@@ -35,6 +35,7 @@ public class Log {
                 throw new RuntimeException(e);
             }
             String strBis = strBuild.toString();
+            if (strBis.equals("")) return;
             Gson gson = new GsonBuilder().create();
             Request[] req = gson.fromJson(strBis, Request[].class);
             listRequestLog.clear();

@@ -19,13 +19,22 @@ public class CalculateMax {
         productList = loadSaveTSV.loadTSV("categories.tsv");
     }
 
-    public String calcStringMax() throws ParseException {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, 0);
+    private Calendar setDey(String jsonStringFromClient) throws ParseException {
+        Gson gson = new GsonBuilder().create();
+        Request req = gson.fromJson(jsonStringFromClient, Request.class);
+        String[] strCalendar = req.getDate().split("\\.");
+        int yearInt = Integer.parseInt(strCalendar[0]);
+        int monthInt = Integer.parseInt(strCalendar[1]);
+        int dayInt = Integer.parseInt(strCalendar[2]);
+        return new GregorianCalendar(yearInt, monthInt - 1, dayInt);
+    }
+
+    public String calcStringMax(String jsonStringFromClient) throws ParseException {
+        Calendar calendar = setDey(jsonStringFromClient);
         int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        int year = calendar.get(Calendar.YEAR);//год
-        int month = calendar.get(Calendar.MONTH) + 1;//месяц
-        int dey = calendar.get(Calendar.DAY_OF_MONTH);//текущий день в месяце
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int dey = calendar.get(Calendar.DAY_OF_MONTH);
         String allSFirst = calcMax("", "", 0);//за весь период
         String allSLast = allSFirst.substring(1);
         String allS = allSLast.substring(0, allSLast.length() - 1);

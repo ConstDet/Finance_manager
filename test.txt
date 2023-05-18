@@ -1,5 +1,7 @@
 package ru.netology.server;
 
+import junit.framework.TestCase;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -8,9 +10,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class CalculateMaxTest {
+public class CalculateMaxTest extends TestCase {
     Request requestMock = new Request();
 
     public class LogMock extends Log {
@@ -20,7 +20,7 @@ class CalculateMaxTest {
         }
 
         @Override
-        public List<Request> getLog() {
+        public List<Request> getLog() throws ParseException {
             requestMock.setTitle("булка");
             requestMock.setDate("2023.04.23");
             requestMock.setSum(300.0);
@@ -34,8 +34,9 @@ class CalculateMaxTest {
             super.loadLog();
         }
     }
+
     @Test
-    void calcMax() throws FileNotFoundException, ParseException {
+    public void testCalcMax() throws FileNotFoundException, ParseException {
         LogMock logMock = new LogMock();
         logMock.getLog();
 
