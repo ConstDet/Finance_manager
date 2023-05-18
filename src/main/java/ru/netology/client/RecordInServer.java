@@ -39,7 +39,6 @@ public class RecordInServer {
             record.setDate(format.format(date));
             Gson gson = new GsonBuilder().create();
             String str = gson.toJson(record);
-            str = "{\"title\": \"колбаса\", \"date\": \"2021.02.08\", \"sum\": 100}";
             out.println(str);//отправили сообщение
             String line = in.readLine();//приняли ответ
             JSONParser jsonParser = new JSONParser();
