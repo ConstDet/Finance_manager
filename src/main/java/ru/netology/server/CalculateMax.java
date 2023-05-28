@@ -13,10 +13,12 @@ public class CalculateMax {
     private Log log;
     private HashMap<String, Double> mapMax = new HashMap<>();
     private List<Product> productList;
+    protected CategoryStatistics categoryStatistics;
     public CalculateMax(Log log) {
         this.log = log;
         LoadSaveTSV loadSaveTSV = new LoadSaveTSV();
         productList = loadSaveTSV.loadTSV("categories.tsv");
+        categoryStatistics = new CategoryStatistics();
     }
 
     private Calendar setDey(String jsonStringFromClient) throws ParseException {
@@ -35,30 +37,24 @@ public class CalculateMax {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         int dey = calendar.get(Calendar.DAY_OF_MONTH);
-        String allSFirst = calcMax("", "", 0);//за весь период
-        String allSLast = allSFirst.substring(1);
-        String allS = allSLast.substring(0, allSLast.length() - 1);
+        calcMax("", "", 0);//за весь период
         String dateFrom = year + ".01.01";
         String dateTo = year + ".12.31";
-        String yearSFirst = calcMax(dateFrom, dateTo, 1);//за год
-        String yearSLast = yearSFirst.substring(1);
-        String yearS = yearSLast.substring(0, yearSLast.length() - 1);
+        calcMax(dateFrom, dateTo, 1);//за год
         dateFrom = year + "." + month + ".01";
         dateTo = year + "." + month + "." + daysInMonth;
-        String monthSFirst = calcMax(dateFrom, dateTo, 2);//за месяц
-        String monthSLast = monthSFirst.substring(1);
-        String monthS = monthSLast.substring(0, monthSLast.length() - 1);
+        calcMax(dateFrom, dateTo, 2);//за месяц
         dateFrom = year + "." + month + "." + (dey - 1);
         dateTo = year + "." + month + "." + (dey + 1);
-        String daySFirst = calcMax(dateFrom, dateTo, 3);//за текущий день
-        String daySLast = daySFirst.substring(1);
-        String dayS = daySLast.substring(0, daySLast.length() - 1);
-        return "{" + allS + "," + yearS + "," + monthS + "," + dayS + "}";
+        calcMax(dateFrom, dateTo, 3);//за текущий день
+        Gson gson = new GsonBuilder().create();
+        String str = gson.toJson(categoryStatistics);
+        return str;
     }
 
-    public String calcMax(String fromD, String toD, int period) throws ParseException {
+    public void calcMax(String fromD, String toD, int period) throws ParseException {
         List<Request> requestList = null;
-        if (log == null) return "Пустой лог!";
+        if (log == null) return;
         if (fromD.equals("") && toD.equals("")) { //весь период
             requestList = log.getLog();
         } else {
@@ -96,41 +92,36 @@ public class CalculateMax {
         mapMax.clear();
         switch (period) {
             case 0:
-                MaxCategory responseKeyValue = new MaxCategory();
-                responseKeyValue.setCategory(cat);
-                responseKeyValue.setSum(max);
-                ResponseMax responseMax = new ResponseMax();
-                responseMax.setResponseKeyValue(responseKeyValue);
-                Gson gson = new GsonBuilder().create();
-                return gson.toJson(responseMax);
+                Map maxCategory = new TreeMap(); {
+                maxCategory.put("category", cat);
+                maxCategory.put("sum", max);
+            }
+                categoryStatistics.setMaxCategory(maxCategory);
+                break;
             case 1:
-                MaxYearCategory maxYearCategory = new MaxYearCategory();
-                maxYearCategory.setCategory(cat);
-                maxYearCategory.setSum(max);
-                ResponseMax responseMax1 = new ResponseMax();
-                responseMax1.setMaxYearCategory(maxYearCategory);
-                Gson gson1 = new GsonBuilder().create();
-                return gson1.toJson(responseMax1);
+                Map maxYearCategory = new TreeMap<>(); {
+                maxYearCategory.put("category", cat);
+                maxYearCategory.put("sum", max);
+            }
+            categoryStatistics.setMaxYearCategory(maxYearCategory);
+                break;
             case 2:
-                MaxMonthCategory maxMonthCategory = new MaxMonthCategory();
-                maxMonthCategory.setCategory(cat);
-                maxMonthCategory.setSum(max);
-                ResponseMax responseMax2 = new ResponseMax();
-                responseMax2.setMaxMonthCategory(maxMonthCategory);
-                Gson gson2 = new GsonBuilder().create();
-                return gson2.toJson(responseMax2);
+                Map maxMonthCategory = new TreeMap<>(); {
+                maxMonthCategory.put("category", cat);
+                maxMonthCategory.put("sum", max);
+            }
+            categoryStatistics.setMaxMonthCategory(maxMonthCategory);
+                break;
             case 3:
-                MaxDayCategory maxDayCategory = new MaxDayCategory();
-                maxDayCategory.setCategory(cat);
-                maxDayCategory.setSum(max);
-                ResponseMax responseMax3 = new ResponseMax();
-                responseMax3.setMaxDayCategory(maxDayCategory);
-                Gson gson3 = new GsonBuilder().create();
-                return gson3.toJson(responseMax3);
+                Map maxDayCategory = new TreeMap<>(); {
+                maxDayCategory.put("category", cat);
+                maxDayCategory.put("sum", max);
+            }
+            categoryStatistics.setMaxDayCategory(maxDayCategory);
+                break;
             default:
                 break;
         }
-        return "";
     }
 
     public Date StrToDate(String strDate) throws ParseException {

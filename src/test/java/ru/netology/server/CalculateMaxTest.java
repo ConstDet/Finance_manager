@@ -1,5 +1,7 @@
 package ru.netology.server;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +42,9 @@ class CalculateMaxTest {
         logMock.getLog();
 
         CalculateMax calculateMax = new CalculateMax(logMock);
-        String preferences = calculateMax.calcMax("", "", 0);
+        calculateMax.calcMax("", "", 0);
+        Gson gson = new GsonBuilder().create();
+        String preferences = gson.toJson(calculateMax.categoryStatistics);
 
         String expect = "{\"maxCategory\":{\"category\":\"еда\",\"sum\":300.0}}";
 
